@@ -6,7 +6,7 @@ from tabulate import tabulate
 git_header = {"Authorization": f"Bearer {os.environ.get('GH_TOKEN')}"}
 git_url = "https://api.github.com/graphql"
 
-def run_query(url, header, query, variables): # A simple function to use requests.post to make the API call. Note the json= section.
+def run_query(url, header, query, variables):
     request = requests.post(url, json={'query': query, 'variables': variables}, headers=header)
     if request.status_code == 200:
         return request.json()
@@ -26,10 +26,9 @@ query = '''
     }
 '''
 
-users = ["jojustin"]
-user_insights = []
-range=100
-contributionsMessage = "Total Contributions(" + str(range) + " Days)"
+users = ["jojustin"]  #List of your organization users
+user_insights = [] 
+range=100 #Date range to retrieve contributions
 now_str = (datetime.now()).strftime("%Y-%m-%dT%H:%M:%S")
 n_days_ago_str = (datetime.now() - timedelta(days=range)).strftime("%Y-%m-%dT%H:%M:%SZ")
 input_variables = {}
@@ -42,5 +41,5 @@ for user in users:
     user_contributions  = resp_data['data']['user']['contributionsCollection']['contributionCalendar']['totalContributions']
     user_insights.append([user, user_contributions])        
 
-head = ["User", "Contributions", contributionsMessage]
+head = ["User", "Contributions"]
 print(tabulate(user_insights, headers=head, tablefmt="grid"))
