@@ -1,2 +1,3 @@
 # gitcontributions
-Python to retrieve GitHub contributions using GraphQL
+
+Python code to retrieve GitHub contributions using GraphQL
